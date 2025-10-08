@@ -7,7 +7,7 @@ pandas==2.2.2
 numpy==1.26.4
 
 # AI synthesis
-openai==1.35.3
+openai>=1.50.0
 
 # Web scraping for WGC monitoring
 requests==2.32.3
