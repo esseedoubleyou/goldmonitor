@@ -1,0 +1,74 @@
+Gold Monitor/
+│
+├── 📚 Documentation (Start Here!)
+│   ├── BUILD_COMPLETE.md ⭐ ← READ THIS FIRST!
+│   ├── QUICKSTART.md (5-minute setup)
+│   ├── SETUP.md (detailed guide)
+│   ├── PROJECT_SUMMARY.md (architecture)
+│   ├── README.md (overview)
+│   └── PROJECT_TREE.txt (this file)
+│
+├── 🔒 Configuration (Edit with your API keys!)
+│   ├── .env ⚠️ ← ADD YOUR NEW API KEYS HERE
+│   ├── .env.example (template)
+│   ├── .gitignore (security)
+│   └── requirements.txt (dependencies)
+│
+├── 🤖 GitHub Actions (Automation)
+│   └── .github/workflows/
+│       └── monthly-report.yml (runs 1st of month)
+│
+├── 💻 Source Code (The Engine)
+│   └── src/
+│       ├── __init__.py
+│       ├── data_fetcher.py (FRED + Yahoo)
+│       ├── cb_monitor.py (WGC hybrid)
+│       ├── metrics_calculator.py (indicators)
+│       ├── ai_synthesizer.py (OpenAI)
+│       └── report_generator.py (markdown)
+│
+├── 🚀 Executable Scripts (Your Commands)
+│   └── scripts/
+│       ├── run_monthly_report.py ⭐ ← RUN THIS MONTHLY
+│       ├── manual_cb_update.py ← RUN QUARTERLY
+│       └── verify_setup.py ← RUN TO TEST SETUP
+│
+├── 💾 Data Storage (Auto-managed)
+│   └── data/
+│       ├── cb_reserves.csv (update quarterly)
+│       ├── cb_monitor_state.json (auto)
+│       └── gold_metrics_history.csv (auto)
+│
+└── 📊 Reports (Your Output!)
+    └── reports/
+        ├── YYYY-MM-gold.md (monthly reports)
+        └── charts/ (embedded charts)
+
+═══════════════════════════════════════════════════
+QUICK START (5 minutes):
+═══════════════════════════════════════════════════
+
+1. Secure your keys (CRITICAL!):
+   nano .env
+   (Replace with YOUR NEW keys)
+
+2. Verify setup:
+   python scripts/verify_setup.py
+
+3. Generate first report:
+   python scripts/run_monthly_report.py
+
+4. View your report:
+   open reports/$(date +%Y-%m)-gold.md
+
+═══════════════════════════════════════════════════
+KEY COMMANDS:
+═══════════════════════════════════════════════════
+
+Monthly:    python scripts/run_monthly_report.py
+Quarterly:  python scripts/manual_cb_update.py
+Verify:     python scripts/verify_setup.py
+
+═══════════════════════════════════════════════════
+COST: ~$0.60/year | MAINTENANCE: <10 min/month
+═══════════════════════════════════════════════════
