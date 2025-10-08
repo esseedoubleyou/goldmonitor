@@ -116,24 +116,24 @@ class AISynthesizer:
 - Current 10Y TIPS Yield: {fmt_num(metrics.get('real_yield_current'))}%
 - 30-day change: {fmt_pct(metrics.get('real_yield_momentum_30d'))}
 - 90-day change: {fmt_pct(metrics.get('real_yield_momentum_90d'))}
-- Direction: {'Falling (bullish for gold)' if metrics.get('real_yield_momentum_30d', 0) < 0 else 'Rising (bearish for gold)'}
+- Direction: {'Falling (bullish for gold)' if (metrics.get('real_yield_momentum_30d') or 0) < 0 else 'Rising (bearish for gold)'}
 
 **US Dollar Strength**
 - Current DXY: {fmt_num(metrics.get('dxy_current'))}
 - 30-day change: {fmt_pct(metrics.get('dxy_momentum_30d'))}
 - 90-day change: {fmt_pct(metrics.get('dxy_momentum_90d'))}
-- Direction: {'Weakening (bullish for gold)' if metrics.get('dxy_momentum_30d', 0) < 0 else 'Strengthening (bearish for gold)'}
+- Direction: {'Weakening (bullish for gold)' if (metrics.get('dxy_momentum_30d') or 0) < 0 else 'Strengthening (bearish for gold)'}
 
 **Market Sentiment**
 - VIX: {fmt_num(metrics.get('vix_current'))}
 - Geopolitical Risk Index: {fmt_num(metrics.get('gpr_current'), 1)}
-- Risk environment: {'Elevated' if metrics.get('vix_current', 0) > 20 else 'Normal'}
+- Risk environment: {'Elevated' if (metrics.get('vix_current') or 0) > 20 else 'Normal'}
 
 **Central Bank Activity**
 - Latest quarter: {cb_data.get('quarter', 'N/A')}
 - Net purchases: {fmt_num(cb_data.get('cb_net_tonnes'), 1)} tonnes
 - Data freshness: {cb_data.get('days_old', 'N/A')} days old {'⚠️ STALE' if cb_data.get('is_stale') else '✓'}
-- Context: {'Strong buying (>250t)' if cb_data.get('cb_net_tonnes', 0) > 250 else 'Moderate buying'}
+- Context: {'Strong buying (>250t)' if (cb_data.get('cb_net_tonnes') or 0) > 250 else 'Moderate buying'}
 
 ### Valuation Metrics
 
@@ -141,12 +141,12 @@ class AISynthesizer:
 - Spot: ${fmt_num(metrics.get('gold_spot_current'))}
 - Real (inflation-adjusted): ${fmt_num(metrics.get('real_gold_price_current'))}
 - Real gold z-score (5Y): {fmt_num(metrics.get('real_gold_zscore'))}
-  * Z-score interpretation: {'Overvalued' if metrics.get('real_gold_zscore', 0) > 1.0 else 'Undervalued' if metrics.get('real_gold_zscore', 0) < -1.0 else 'Fair value'}
+  * Z-score interpretation: {'Overvalued' if (metrics.get('real_gold_zscore') or 0) > 1.0 else 'Undervalued' if (metrics.get('real_gold_zscore') or 0) < -1.0 else 'Fair value'}
 
 **Relative Performance**
 - Gold/S&P 500 ratio: {fmt_num(metrics.get('gold_sp_ratio'), 4)}
 - 30-day gold return: {fmt_pct(metrics.get('gold_spot_momentum_30d'))}
-- Trend: {'Gold outperforming stocks' if metrics.get('gold_spot_momentum_30d', 0) > 0 else 'Stocks outperforming gold'}
+- Trend: {'Gold outperforming stocks' if (metrics.get('gold_spot_momentum_30d') or 0) > 0 else 'Stocks outperforming gold'}
 
 ### Regime Score: {regime_score['score']} ({regime_score['assessment']})
 

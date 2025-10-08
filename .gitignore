@@ -34,8 +34,8 @@ wheels/
 *~
 .DS_Store
 
-# Data files (history builds over time, don't commit)
-data/gold_metrics_history.csv
+# Data files (CB reserves is tracked, temp files are not)
+data/*.tmp
 
 # Jupyter
 .ipynb_checkpoints/
