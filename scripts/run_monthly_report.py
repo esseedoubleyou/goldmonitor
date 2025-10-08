@@ -39,6 +39,41 @@ from ai_synthesizer import AISynthesizer
 from report_generator import ReportGenerator
 
 
+def generate_fallback_narrative(metrics: dict, regime_score: dict) -> str:
+    """
+    Generate a simple narrative without requiring OpenAI client.
+    This is used when AI synthesis fails or is disabled.
+    """
+    ry_change = metrics.get('real_yield_momentum_30d', 0)
+    dxy_change = metrics.get('dxy_momentum_30d', 0)
+    gold_change = metrics.get('gold_spot_momentum_30d', 0)
+    
+    narrative = f"""## Executive Summary
+
+**Market Regime:** {regime_score['assessment']} (Score: {regime_score['score']})
+
+Over the past 30 days, real yields have {'fallen' if ry_change < 0 else 'risen'} by {abs(ry_change)*100:.1f}%, \
+while the US dollar has {'weakened' if dxy_change < 0 else 'strengthened'} by {abs(dxy_change)*100:.1f}%. \
+Gold spot prices {'increased' if gold_change > 0 else 'decreased'} by {abs(gold_change)*100:.1f}% during this period.
+
+**Key Drivers:**
+"""
+    
+    for component, weight, icon in regime_score['components']:
+        narrative += f"\n{icon} {component} ({weight:+.1f})"
+    
+    narrative += f"""
+
+**Position Recommendation:** {regime_score['action']}
+
+**Conviction Level:** {regime_score['conviction']}
+
+Note: This is a fallback analysis. For more detailed insights, check OpenAI API configuration.
+"""
+    
+    return narrative
+
+
 def load_historical_data() -> pd.DataFrame:
     """
     Load historical metrics data if it exists.
@@ -204,12 +239,10 @@ def run_monthly_report(
             except Exception as e:
                 print(f"⚠️  AI synthesis failed: {e}")
                 print("   Using fallback narrative")
-                synthesizer = AISynthesizer("dummy")
-                ai_narrative = synthesizer._fallback_narrative(metrics, regime_score)
+                ai_narrative = generate_fallback_narrative(metrics, regime_score)
         else:
             print("ℹ️  Using fallback narrative (AI disabled)")
-            synthesizer = AISynthesizer("dummy")
-            ai_narrative = synthesizer._fallback_narrative(metrics, regime_score)
+            ai_narrative = generate_fallback_narrative(metrics, regime_score)
         
         # ===== STEP 7: Generate Report =====
         print("\nSTEP 7: Generating markdown report")
