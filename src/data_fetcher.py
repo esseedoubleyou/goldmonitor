@@ -14,6 +14,7 @@ import yfinance as yf
 import pandas as pd
 from datetime import datetime, timedelta
 from typing import Dict, Optional
+from pathlib import Path
 import os
 
 
@@ -104,6 +105,19 @@ class GoldDataFetcher:
         try:
             # Try multiple methods to get gold prices
             print("Fetching gold prices...")
+            
+            # Method 0: Check for manual override file first
+            manual_file = Path('data/gold_prices_manual.csv')
+            if manual_file.exists():
+                try:
+                    manual_data = pd.read_csv(manual_file, parse_dates=['date'], index_col='date')
+                    if not manual_data.empty and 'close' in manual_data.columns:
+                        results['gold_history'] = manual_data['close']
+                        print(f"✅ Using manual gold prices from {manual_file.name}: {len(manual_data)} observations")
+                        print(f"   💡 Remove this file to use live Yahoo Finance data again")
+                        return results
+                except Exception as e:
+                    print(f"⚠️  Manual file exists but couldn't load: {e}")
             
             # Method 1: Try forex ticker (XAUUSD=X)
             try:
