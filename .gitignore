@@ -34,8 +34,9 @@ wheels/
 *~
 .DS_Store
 
-# Data files (CB reserves is tracked, temp files are not)
+# Data files (CB reserves and metrics history are tracked, manual overrides and temp files are not)
 data/*.tmp
+data/gold_prices_manual.csv
 
 # Jupyter
 .ipynb_checkpoints/
