@@ -15,13 +15,14 @@ import json
 class AISynthesizer:
     """Uses OpenAI API to generate narrative synthesis."""
     
-    def __init__(self, api_key: str, model: str = "gpt-5-pro"):
+    def __init__(self, api_key: str, model: str = "gpt-4o"):
         """
         Initialize synthesizer.
         
         Args:
             api_key: OpenAI API key
-            model: Model to use (default: gpt-5-pro for best reasoning and analysis)
+            model: Model to use (default: gpt-4o for best reasoning and analysis)
+                   Note: gpt-5-pro requires different API access
         """
         self.client = OpenAI(api_key=api_key)
         self.model = model
